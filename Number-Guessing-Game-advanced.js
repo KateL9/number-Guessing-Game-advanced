@@ -9,35 +9,31 @@
 Программа должны быть выполнена с помощью рекурсии, без единого цикла.
 Загаданное число и оставшиеся кол-во попыток должно храниться «в замыкании»*/
 
+
 let isNumber = function(n) {
     return !isNaN(parseFloat(n));
 };
 
-function startGame() {
-    let guess = 60,
-        counter = 10;
-    guessNumber();
-
-    function guessNumber() {
-        let number = prompt('Угадай число от 1 до 100');
-        if (number == guess) {
-            if (confirm('Вы угадали!!! Хотели бы сыграть еще?')) counter = 10, guessNumber();
-        } else if (!number) {
-            alert('Игра окончена');
-        } else if (counter <= 0) {
-            if (confirm('Попытки закончились, хотите сыграть еще?')) counter = 10, guessNumber();
-        } else if (!isNumber(number)) {
-            alert("Введите число");
-            guessNumber();
-        } else if (number < guess && counter != 1) {
-            alert(`Загаданное число меньше, осталось попыток ${counter-1}`);
-            counter--;
-            guessNumber();
-        } else if (number > guess && counter != 1) {
-            alert(`Загаданное число больше, осталось попыток ${counter-1}`);
-            counter--;
-            guessNumber();
-        }
+function guessNumber(counter = 10) {
+    console.log(counter);
+    let guess = 60;
+    let number = prompt('Угадай число от 1 до 100');
+    if (number == guess) {
+        if (confirm('Вы угадали!!! Хотели бы сыграть еще?')) guessNumber(10);
+    } else if (number != '' && !number) {
+        alert('Игра окончена');
+    } else if (counter <= 1) {
+        if (confirm('Попытки закончились, хотите сыграть еще?')) guessNumber(10);
+    } else if (!isNumber(number)) {
+        alert("Введите число");
+        guessNumber(counter);
+    } else if (number < guess) {
+        alert(`Загаданное число меньше, осталось попыток ${counter-1}`);
+        counter--;
+        guessNumber(counter);
+    } else if (number > guess) {
+        alert(`Загаданное число больше, осталось попыток ${counter-1}`);
+        counter--;
+        guessNumber(counter);
     }
 };
-startGame();
