@@ -14,26 +14,31 @@ let isNumber = function(n) {
     return !isNaN(parseFloat(n));
 };
 
-function guessNumber(counter = 10) {
-    console.log(counter);
-    let guess = 60;
+function randomNum() {
+    return Math.ceil(Math.random() * (100 - 1) + 1);
+};
+
+function guessNumber(guess, counter = 10) {
+    console.log(guess);
     let number = prompt('Угадай число от 1 до 100');
     if (number == guess) {
-        if (confirm('Вы угадали!!! Хотели бы сыграть еще?')) guessNumber(10);
+        if (confirm('Вы угадали!!! Хотели бы сыграть еще?')) guessNumber(randomNum(), 10);
     } else if (number != '' && !number) {
         alert('Игра окончена');
     } else if (counter <= 1) {
-        if (confirm('Попытки закончились, хотите сыграть еще?')) guessNumber(10);
+        if (confirm('Попытки закончились, хотите сыграть еще?')) guessNumber(randomNum(), 10);
     } else if (!isNumber(number)) {
         alert("Введите число");
-        guessNumber(counter);
+        guessNumber(guess, counter);
     } else if (number < guess) {
-        alert(`Загаданное число меньше, осталось попыток ${counter-1}`);
-        counter--;
-        guessNumber(counter);
-    } else if (number > guess) {
         alert(`Загаданное число больше, осталось попыток ${counter-1}`);
         counter--;
-        guessNumber(counter);
+        guessNumber(guess, counter);
+    } else if (number > guess) {
+        alert(`Загаданное число меньше, осталось попыток ${counter-1}`);
+        counter--;
+        guessNumber(guess, counter);
     }
 };
+
+guessNumber(randomNum());
